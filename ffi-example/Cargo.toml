@@ -1,0 +1,9 @@
+[package]
+name = "ffi-example"
+version = "0.1.0"
+edition = "2024"
+
+[dependencies]
+abi_stable = "0.11"
+ffi-interface = { path = "../ffi-interface" }
+ffi-macros = { path = "../ffi-macros" }

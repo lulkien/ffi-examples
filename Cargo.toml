@@ -1,0 +1,9 @@
+[workspace]
+resolver = "2"
+members = [
+  "ffi-example",
+  "ffi-interface",
+  "ffi-macros",
+  "ffi-plugin",
+  "plugins/test-plugin"
+]
