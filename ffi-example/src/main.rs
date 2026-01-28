@@ -3,7 +3,7 @@ use ffi_interface::CommandRef;
 use std::{env, path::PathBuf};
 
 fn main() {
-    let plugins_name = ["test_plugin"];
+    let plugins_name = ["cd"];
     let binary_path = env::current_exe().expect("Failed to collect binary path");
     let binary_dir = binary_path.parent().unwrap();
 
@@ -24,17 +24,18 @@ fn main() {
         .collect::<Vec<CommandRef>>();
 
     plugins.iter().for_each(|plugin| {
-        let info = plugin.info()();
-        println!("name       : {}", info.name.to_string());
-        println!("description: {}", info.description.to_string());
-        println!("version    : {}", info.version.to_string());
+        let mut cwd = env::current_dir().unwrap();
+        println!("Current: {}", cwd.display());
 
         let mut args: RVec<RString> = RVec::new();
-        args.push("-h".into());
-        args.push("-v".into());
+        args.push("~".into());
 
         plugin.set_args()(args);
         let result = plugin.exec()();
+
         println!("{:?}", result);
+
+        cwd = env::current_dir().unwrap();
+        println!("Current after cd: {}", cwd.display());
     });
 }
